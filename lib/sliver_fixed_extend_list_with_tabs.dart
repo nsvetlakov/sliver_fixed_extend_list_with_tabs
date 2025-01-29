@@ -140,7 +140,7 @@ class _SliverFixedExtendListWithTabsState
       _tabItems.add(TabItem(
         key: ValueKey(count),
         headerItem: _sections[i].header,
-        text: 'Tab ${_tabItems.length} $count',
+        text: _sections[i].tab,
       ));
       count += _sections[i].children.length + 1;
     }
@@ -351,9 +351,11 @@ class TabItem extends StatelessWidget implements PreferredSizeWidget {
 
 class Section {
   const Section({
+    required this.tab,
     required this.header,
     required this.children,
   });
+  final String tab;
   final HeaderItem header;
   final List<ChildItem> children;
 
