@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       sections.add(Section(
         header: header,
         children: children,
+        tab: 'Tab $i',
       ));
       offsetStart = header.offsetEnd;
     }

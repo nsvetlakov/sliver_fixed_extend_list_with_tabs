@@ -141,6 +141,7 @@ class _SliverFixedExtendListWithTabsState
         key: ValueKey(count),
         headerItem: _sections[i].header,
         text: _sections[i].tab,
+        child: _sections[i].child,
       ));
       count += _sections[i].children.length + 1;
     }
@@ -302,11 +303,12 @@ class TabItem extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     this.text,
     this.height,
-    required this.headerItem,
+    this.child,
+    this.headerItem,
   });
 
   /// The [HeaderItem] to display as the tab's label.
-  final HeaderItem headerItem;
+  final HeaderItem? headerItem;
 
   /// The text to display as the tab's label.
   final String? text;
@@ -315,6 +317,8 @@ class TabItem extends StatelessWidget implements PreferredSizeWidget {
   ///
   /// If null, the height will be calculated based on the content of the [TabItem].
   final double? height;
+
+  final Widget? child;
 
   Widget buildLabelText() {
     return Text(text!, softWrap: false, overflow: TextOverflow.ellipsis);
@@ -330,13 +334,14 @@ class TabItem extends StatelessWidget implements PreferredSizeWidget {
       ],
     );
 
-    return SizedBox(
-      height: height ?? _kTabHeight,
-      child: Center(
-        widthFactor: 1.0,
-        child: label,
-      ),
-    );
+    return child ??
+        SizedBox(
+          height: height ?? _kTabHeight,
+          child: Center(
+            widthFactor: 1.0,
+            child: label,
+          ),
+        );
   }
 
   @override
@@ -354,10 +359,12 @@ class Section {
     required this.tab,
     required this.header,
     required this.children,
+    this.child,
   });
   final String tab;
   final HeaderItem header;
   final List<ChildItem> children;
+  final Widget? child;
 
   static int getSectionItemsCount(
       HeaderItem? header, List<ChildItem> children) {
